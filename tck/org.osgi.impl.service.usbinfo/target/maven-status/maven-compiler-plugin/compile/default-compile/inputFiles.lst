@@ -1,0 +1,5 @@
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.usbinfo/tck/org.osgi.impl.service.usbinfo/src/main/java/org/osgi/impl/service/usbinfo/Activator.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.usbinfo/tck/org.osgi.impl.service.usbinfo/src/main/java/org/osgi/impl/service/usbinfo/Commands.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.usbinfo/tck/org.osgi.impl.service.usbinfo/src/main/java/org/osgi/impl/service/usbinfo/TestStepImpl.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.usbinfo/tck/org.osgi.impl.service.usbinfo/src/main/java/org/osgi/impl/service/usbinfo/USBInfoDeviceImpl.java
+/home/stbischof/git/OSGI_MIGRATE/osgi_target/org.osgi.service.usbinfo/tck/org.osgi.impl.service.usbinfo/src/main/java/org/osgi/impl/service/usbinfo/USBTracker.java
