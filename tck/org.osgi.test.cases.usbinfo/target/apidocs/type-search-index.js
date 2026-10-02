@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.osgi.test.cases.usbinfo.junit","l":"SignatureTestCase"},{"p":"org.osgi.test.cases.usbinfo.util","l":"TestServiceListener"},{"p":"org.osgi.test.cases.usbinfo.junit","l":"USBInfoDeviceTestCase"},{"p":"org.osgi.test.cases.usbinfo.util","l":"USBTestProxy"}];updateSearchResults();

@@ -1,0 +1,4 @@
+org/osgi/test/cases/usbinfo/util/USBTestProxy.class
+org/osgi/test/cases/usbinfo/junit/USBInfoDeviceTestCase.class
+org/osgi/test/cases/usbinfo/util/TestServiceListener.class
+org/osgi/test/cases/usbinfo/junit/SignatureTestCase.class

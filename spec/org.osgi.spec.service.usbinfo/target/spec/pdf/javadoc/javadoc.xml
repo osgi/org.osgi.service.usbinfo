@@ -1,0 +1,377 @@
+<?xml version='1.0' encoding='utf-8'?>
+<top>
+  <package name='org.osgi.service.usbinfo' fqn='org.osgi.service.usbinfo' qn='org.osgi.service.usbinfo'>
+<org.osgi.annotation.versioning.Version><value>1.0</value>
+</org.osgi.annotation.versioning.Version>
+   <lead>
+USB Information Device Category Specification Package Version 1.0.
+   </lead>
+   <description>
+USB Information Device Category Specification Package Version 1.0.
+
+ <p>
+ Bundles wishing to use this package must list the package in the
+ Import-Package header of the bundle's manifest. This package has two types of
+ users: the consumers that use the API in this package and the providers that
+ implement the API in this package.
+
+ </p><p>
+ Example import for consumers using the API in this package:
+ </p><p>
+ {@code  Import-Package: org.osgi.service.usbinfo; version="[1.0,2.0)"}
+ </p><p>
+ Example import for providers implementing the API in this package:
+ </p><p>
+ {@code  Import-Package: org.osgi.service.usbinfo; version="[1.0,1.1)"}</p>
+   </description>
+<author>@author $Id: d7c628dec494693e143228d31750c2d31209278f $</author>
+  <class name='USBInfoDevice' fqn='org.osgi.service.usbinfo.USBInfoDevice' qn='USBInfoDevice' package='org.osgi.service.usbinfo' typeParam='' modifiers='public abstract' interface='yes' kind='INTERFACE'>
+   <lead>
+Represents a USB device.
+   </lead>
+   <description>
+Represents a USB device. For each USB device, an object is registered with
+ the framework under the USBInfoDevice interface. A USB information base
+ driver must implement this interface.
+
+ <p>
+ The values of the USB property names are defined by the USB Implementers
+ Forum, Inc.</p>
+   </description>
+<ThreadSafe></ThreadSafe><author>@author $Id: 3dbbee085fb6d20c6b7b2f922dfa7110db16ecf4 $</author>
+    <field name='DEVICE_CATEGORY' fqn='org.osgi.service.usbinfo.USBInfoDevice.DEVICE_CATEGORY' qn='USBInfoDevice.DEVICE_CATEGORY' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"USBInfo"'>
+   <lead>
+Constant for the value of the service property {@code DEVICE_CATEGORY}
+ used for all USB devices.
+   </lead>
+   <description>
+Constant for the value of the service property {@code DEVICE_CATEGORY}
+ used for all USB devices.
+ 
+ <p>
+ A USB information base driver bundle must set this property key.</p>
+   </description>
+<a href='#org.osgi.service.device.Constants.DEVICE_CATEGORY'>org.osgi.service.device.Constants.DEVICE_CATEGORY</a>
+     </field>
+    <field name='USB_BCDUSB' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BCDUSB' qn='USBInfoDevice.USB_BCDUSB' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bcdUSB"'>
+   <lead>
+Service property for USB Device Descriptor field "bcdUSB".
+   </lead>
+   <description>
+Service property for USB Device Descriptor field "bcdUSB".
+ <p>
+ The value type is String; the value is in 4-digit BCD format. For
+ example, "0210". This service property is optional.</p>
+   </description>
+
+     </field>
+    <field name='USB_BDEVICECLASS' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BDEVICECLASS' qn='USBInfoDevice.USB_BDEVICECLASS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bDeviceClass"'>
+   <lead>
+Service property for USB Device Descriptor field "bDeviceClass".
+   </lead>
+   <description>
+Service property for USB Device Descriptor field "bDeviceClass".
+ <p>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</p>
+   </description>
+
+     </field>
+    <field name='USB_BDEVICESUBCLASS' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BDEVICESUBCLASS' qn='USBInfoDevice.USB_BDEVICESUBCLASS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bDeviceSubClass"'>
+   <lead>
+Service property for USB Device Descriptor field "bDeviceSubClass".
+   </lead>
+   <description>
+Service property for USB Device Descriptor field "bDeviceSubClass".
+ <p>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</p>
+   </description>
+
+     </field>
+    <field name='USB_BDEVICEPROTOCOL' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BDEVICEPROTOCOL' qn='USBInfoDevice.USB_BDEVICEPROTOCOL' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bDeviceProtocol"'>
+   <lead>
+Service property for USB Device Descriptor field "bDeviceProtocol".
+   </lead>
+   <description>
+Service property for USB Device Descriptor field "bDeviceProtocol".
+ <p>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</p>
+   </description>
+
+     </field>
+    <field name='USB_BMAXPACKETSIZE0' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BMAXPACKETSIZE0' qn='USBInfoDevice.USB_BMAXPACKETSIZE0' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bMaxPacketSize0"'>
+   <lead>
+Service property for USB Device Descriptor field "bMaxPacketSize0".
+   </lead>
+   <description>
+Service property for USB Device Descriptor field "bMaxPacketSize0".
+ <p>
+ The value type is Integer. This service property is optional.</p>
+   </description>
+
+     </field>
+    <field name='USB_IDVENDOR' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_IDVENDOR' qn='USBInfoDevice.USB_IDVENDOR' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.idVendor"'>
+   <lead>
+Service property for USB Device Descriptor field "idVendor".
+   </lead>
+   <description>
+Service property for USB Device Descriptor field "idVendor".
+ <p>
+ The value type is String; the value is in 4-digit hexadecimal. For
+ example, "0403".</p>
+   </description>
+
+     </field>
+    <field name='USB_IDPRODUCT' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_IDPRODUCT' qn='USBInfoDevice.USB_IDPRODUCT' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.idProduct"'>
+   <lead>
+Service property for USB Device Descriptor field "idProduct".
+   </lead>
+   <description>
+Service property for USB Device Descriptor field "idProduct".
+ <p>
+ The value type is String; the value is in 4-digit hexadecimal. For
+ example, "8372".</p>
+   </description>
+
+     </field>
+    <field name='USB_BCDDEVICE' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BCDDEVICE' qn='USBInfoDevice.USB_BCDDEVICE' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bcdDevice"'>
+   <lead>
+Service property for USB Device Descriptor field "bcdDevice".
+   </lead>
+   <description>
+Service property for USB Device Descriptor field "bcdDevice".
+ <p>
+ The value type is String; the value is in 4-digit BCD format. For
+ example, "0200".</p>
+   </description>
+
+     </field>
+    <field name='USB_MANUFACTURER' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_MANUFACTURER' qn='USBInfoDevice.USB_MANUFACTURER' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.Manufacturer"'>
+   <lead>
+Service property for name referenced by USB Device Descriptor field
+ "iManufacturer".
+   </lead>
+   <description>
+Service property for name referenced by USB Device Descriptor field
+ "iManufacturer".
+ <p>
+ The value type is String. For example, "Buffalo Inc.". This service
+ property is optional.</p>
+   </description>
+
+     </field>
+    <field name='USB_PRODUCT' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_PRODUCT' qn='USBInfoDevice.USB_PRODUCT' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.Product"'>
+   <lead>
+Service property for name referenced by USB Device Descriptor field
+ "iProduct".
+   </lead>
+   <description>
+Service property for name referenced by USB Device Descriptor field
+ "iProduct".
+ <p>
+ The value type is String. For example, "USB2.0 PC Camera". This service
+ property is optional.</p>
+   </description>
+
+     </field>
+    <field name='USB_SERIALNUMBER' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_SERIALNUMBER' qn='USBInfoDevice.USB_SERIALNUMBER' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.SerialNumber"'>
+   <lead>
+Service property for name referenced by USB Device Descriptor field
+ "iSerialNumber".
+   </lead>
+   <description>
+Service property for name referenced by USB Device Descriptor field
+ "iSerialNumber".
+ <p>
+ The value type is String. For example, "57B0002600000001". This service
+ property is optional.</p>
+   </description>
+
+     </field>
+    <field name='USB_BNUMCONFIGURATIONS' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BNUMCONFIGURATIONS' qn='USBInfoDevice.USB_BNUMCONFIGURATIONS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bNumConfigurations"'>
+   <lead>
+Service property for USB Device Descriptor field "bNumConfigurations".
+   </lead>
+   <description>
+Service property for USB Device Descriptor field "bNumConfigurations".
+ <p>
+ The value type is Integer. This service property is optional.</p>
+   </description>
+
+     </field>
+    <field name='USB_BINTERFACENUMBER' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BINTERFACENUMBER' qn='USBInfoDevice.USB_BINTERFACENUMBER' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bInterfaceNumber"'>
+   <lead>
+Service property for USB Interface Descriptor field "bInterfaceNumber".
+   </lead>
+   <description>
+Service property for USB Interface Descriptor field "bInterfaceNumber".
+ <p>
+ The value type is Integer.</p>
+   </description>
+
+     </field>
+    <field name='USB_BALTERNATESETTING' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BALTERNATESETTING' qn='USBInfoDevice.USB_BALTERNATESETTING' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bAlternateSetting"'>
+   <lead>
+Service property for USB Interface Descriptor field "bAlternateSetting".
+   </lead>
+   <description>
+Service property for USB Interface Descriptor field "bAlternateSetting".
+ <p>
+ The value type is Integer. This service property is optional.</p>
+   </description>
+
+     </field>
+    <field name='USB_BNUMENDPOINTS' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BNUMENDPOINTS' qn='USBInfoDevice.USB_BNUMENDPOINTS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bNumEndpoints"'>
+   <lead>
+Service property for USB Interface Descriptor field "bNumEndpoints".
+   </lead>
+   <description>
+Service property for USB Interface Descriptor field "bNumEndpoints".
+ <p>
+ The value type is Integer. This service property is optional.</p>
+   </description>
+
+     </field>
+    <field name='USB_BINTERFACECLASS' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BINTERFACECLASS' qn='USBInfoDevice.USB_BINTERFACECLASS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bInterfaceClass"'>
+   <lead>
+Service property for USB Interface Descriptor field "bInterfaceClass".
+   </lead>
+   <description>
+Service property for USB Interface Descriptor field "bInterfaceClass".
+ <p>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</p>
+   </description>
+
+     </field>
+    <field name='USB_BINTERFACESUBCLASS' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BINTERFACESUBCLASS' qn='USBInfoDevice.USB_BINTERFACESUBCLASS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bInterfaceSubClass"'>
+   <lead>
+Service property for USB Interface Descriptor field "bInterfaceSubClass".
+   </lead>
+   <description>
+Service property for USB Interface Descriptor field "bInterfaceSubClass".
+ <p>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</p>
+   </description>
+
+     </field>
+    <field name='USB_BINTERFACEPROTOCOL' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BINTERFACEPROTOCOL' qn='USBInfoDevice.USB_BINTERFACEPROTOCOL' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bInterfaceProtocol"'>
+   <lead>
+Service property for USB Interface Descriptor field "bInterfaceProtocol".
+   </lead>
+   <description>
+Service property for USB Interface Descriptor field "bInterfaceProtocol".
+ <p>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</p>
+   </description>
+
+     </field>
+    <field name='USB_INTERFACE' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_INTERFACE' qn='USBInfoDevice.USB_INTERFACE' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.Interface"'>
+   <lead>
+Service property for name referenced by USB Interface Descriptor field
+ "iInterface".
+   </lead>
+   <description>
+Service property for name referenced by USB Interface Descriptor field
+ "iInterface".
+ <p>
+ The value type is String. This service property is optional.</p>
+   </description>
+
+     </field>
+    <field name='USB_BUS' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_BUS' qn='USBInfoDevice.USB_BUS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.bus"'>
+   <lead>
+Service property to identify USB bus.
+   </lead>
+   <description>
+Service property to identify USB bus.
+ <p>
+ Used to identify USB devices with same VID / PID. The value is the ID of
+ the USB bus assigned when connecting the USB device. The USB bus ID is an
+ integer and does not change while the USB device remains connected. The
+ value type is Integer.</p>
+   </description>
+
+     </field>
+    <field name='USB_ADDRESS' fqn='org.osgi.service.usbinfo.USBInfoDevice.USB_ADDRESS' qn='USBInfoDevice.USB_ADDRESS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='String' qualifiedTypeName='java.lang.String' dimension='' constantValue='"usbinfo.address"'>
+   <lead>
+Service property to identify USB address.
+   </lead>
+   <description>
+Service property to identify USB address.
+ <p>
+ Used to identify USB devices with same VID / PID. The value is the ID of
+ the USB address assigned when connecting the USB device. USB address is
+ an integer in the range 1-127 and does not change while the USB device
+ remains connected. The value type is Integer.</p>
+   </description>
+
+     </field>
+    <field name='MATCH_VERSION' fqn='org.osgi.service.usbinfo.USBInfoDevice.MATCH_VERSION' qn='USBInfoDevice.MATCH_VERSION' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='50'>
+   <lead>
+Device Access match value indicating a match with {@link #USB_IDVENDOR},
+ {@link #USB_IDPRODUCT}, and {@link #USB_BCDDEVICE}.
+   </lead>
+   <description>
+Device Access match value indicating a match with {@link #USB_IDVENDOR},
+ {@link #USB_IDPRODUCT}, and {@link #USB_BCDDEVICE}.
+   </description>
+
+     </field>
+    <field name='MATCH_MODEL' fqn='org.osgi.service.usbinfo.USBInfoDevice.MATCH_MODEL' qn='USBInfoDevice.MATCH_MODEL' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='40'>
+   <lead>
+Device Access match value indicating a match with {@link #USB_IDVENDOR},
+ and {@link #USB_IDPRODUCT}.
+   </lead>
+   <description>
+Device Access match value indicating a match with {@link #USB_IDVENDOR},
+ and {@link #USB_IDPRODUCT}.
+   </description>
+
+     </field>
+    <field name='MATCH_PROTOCOL' fqn='org.osgi.service.usbinfo.USBInfoDevice.MATCH_PROTOCOL' qn='USBInfoDevice.MATCH_PROTOCOL' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='30'>
+   <lead>
+Device Access match value indicating a match with
+ {@link #USB_BDEVICECLASS}, {@link #USB_BDEVICESUBCLASS}, and
+ {@link #USB_BDEVICEPROTOCOL} or a match with {@link #USB_BINTERFACECLASS}
+ , {@link #USB_BINTERFACESUBCLASS}, and {@link #USB_BINTERFACEPROTOCOL}.
+   </lead>
+   <description>
+Device Access match value indicating a match with
+ {@link #USB_BDEVICECLASS}, {@link #USB_BDEVICESUBCLASS}, and
+ {@link #USB_BDEVICEPROTOCOL} or a match with {@link #USB_BINTERFACECLASS}
+ , {@link #USB_BINTERFACESUBCLASS}, and {@link #USB_BINTERFACEPROTOCOL}.
+   </description>
+
+     </field>
+    <field name='MATCH_SUBCLASS' fqn='org.osgi.service.usbinfo.USBInfoDevice.MATCH_SUBCLASS' qn='USBInfoDevice.MATCH_SUBCLASS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='20'>
+   <lead>
+Device Access match value indicating a match with
+ {@link #USB_BDEVICECLASS}, and {@link #USB_BDEVICESUBCLASS} or a match
+ with {@link #USB_BINTERFACECLASS}, and {@link #USB_BINTERFACESUBCLASS}.
+   </lead>
+   <description>
+Device Access match value indicating a match with
+ {@link #USB_BDEVICECLASS}, and {@link #USB_BDEVICESUBCLASS} or a match
+ with {@link #USB_BINTERFACECLASS}, and {@link #USB_BINTERFACESUBCLASS}.
+   </description>
+
+     </field>
+    <field name='MATCH_CLASS' fqn='org.osgi.service.usbinfo.USBInfoDevice.MATCH_CLASS' qn='USBInfoDevice.MATCH_CLASS' package='org.osgi.service.usbinfo' modifiers='public static final' typeName='int' qualifiedTypeName='int' dimension='' constantValue='10'>
+   <lead>
+Device Access match value indicating a match with
+ {@link #USB_BDEVICECLASS} or a match with {@link #USB_BINTERFACECLASS}.
+   </lead>
+   <description>
+Device Access match value indicating a match with
+ {@link #USB_BDEVICECLASS} or a match with {@link #USB_BINTERFACECLASS}.
+   </description>
+
+     </field>
+  </class>
+  </package>
+</top>

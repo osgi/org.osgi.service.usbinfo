@@ -1,0 +1,363 @@
+<section xmlns="http://docbook.org/ns/docbook"
+         xreflabel="org.osgi.service.usbinfo"
+         version="5"
+         role="package"
+         xml:id="org.osgi.service.usbinfo">
+   <title>org.osgi.service.usbinfo</title>
+   <info>
+      <releaseinfo xml:id="org.osgi.service.usbinfo-version">Version 1.0</releaseinfo>
+      <edition xml:id="org.osgi.service.usbinfo-version.number">1.0</edition>
+   </info>
+   <para>
+USB Information Device Category Specification Package Version 1.0.
+
+ </para>
+   <para>
+ Bundles wishing to use this package must list the package in the
+ Import-Package header of the bundle's manifest. This package has two types of
+ users: the consumers that use the API in this package and the providers that
+ implement the API in this package.
+
+ </para>
+   <para>
+ Example import for consumers using the API in this package:
+ </para>
+   <para>
+ {@code  Import-Package: org.osgi.service.usbinfo; version="[1.0,2.0)"}
+ </para>
+   <para>
+ Example import for providers implementing the API in this package:
+ </para>
+   <para>
+ {@code  Import-Package: org.osgi.service.usbinfo; version="[1.0,1.1)"}</para>
+   <section role="summary">
+      <title>Summary</title>
+      <itemizedlist>
+         <listitem>
+            <para>
+               <link linkend="org.osgi.service.usbinfo.USBInfoDevice">
+                  <code>USBInfoDevice</code>
+               </link> - 
+Represents a USB device.
+   </para>
+         </listitem>
+      </itemizedlist>
+   </section>
+   <section xreflabel="USBInfoDevice"
+            role="class"
+            xml:id="org.osgi.service.usbinfo.USBInfoDevice">
+      <title>public abstract USBInfoDevice</title>
+      <para>
+Represents a USB device. For each USB device, an object is registered with
+ the framework under the USBInfoDevice interface. A USB information base
+ driver must implement this interface.
+
+ </para>
+      <para>
+ The values of the USB property names are defined by the USB Implementers
+ Forum, Inc.</para>
+      <formalpara role="parameter">
+         <title>Concurrency</title>
+         <para>Thread-safe </para>
+      </formalpara>
+      <section xreflabel="DEVICE_CATEGORY"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.DEVICE_CATEGORY">
+         <title>public static final String DEVICE_CATEGORY = "USBInfo"</title>
+         <para>
+Constant for the value of the service property {@code DEVICE_CATEGORY}
+ used for all USB devices.
+ 
+ </para>
+         <para>
+ A USB information base driver bundle must set this property key.</para>
+         <formalpara role="parameter">
+            <title>See Also</title>
+            <para>
+               <link linkend="UNRESOLVED">org.osgi.service.device.Constants.DEVICE_CATEGORY</link>
+            </para>
+         </formalpara>
+      </section>
+      <section xreflabel="MATCH_CLASS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.MATCH_CLASS">
+         <title>public static final int MATCH_CLASS = 10</title>
+         <para>
+Device Access match value indicating a match with
+ {@link #USB_BDEVICECLASS} or a match with {@link #USB_BINTERFACECLASS}.
+   </para>
+      </section>
+      <section xreflabel="MATCH_MODEL"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.MATCH_MODEL">
+         <title>public static final int MATCH_MODEL = 40</title>
+         <para>
+Device Access match value indicating a match with {@link #USB_IDVENDOR},
+ and {@link #USB_IDPRODUCT}.
+   </para>
+      </section>
+      <section xreflabel="MATCH_PROTOCOL"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.MATCH_PROTOCOL">
+         <title>public static final int MATCH_PROTOCOL = 30</title>
+         <para>
+Device Access match value indicating a match with
+ {@link #USB_BDEVICECLASS}, {@link #USB_BDEVICESUBCLASS}, and
+ {@link #USB_BDEVICEPROTOCOL} or a match with {@link #USB_BINTERFACECLASS}
+ , {@link #USB_BINTERFACESUBCLASS}, and {@link #USB_BINTERFACEPROTOCOL}.
+   </para>
+      </section>
+      <section xreflabel="MATCH_SUBCLASS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.MATCH_SUBCLASS">
+         <title>public static final int MATCH_SUBCLASS = 20</title>
+         <para>
+Device Access match value indicating a match with
+ {@link #USB_BDEVICECLASS}, and {@link #USB_BDEVICESUBCLASS} or a match
+ with {@link #USB_BINTERFACECLASS}, and {@link #USB_BINTERFACESUBCLASS}.
+   </para>
+      </section>
+      <section xreflabel="MATCH_VERSION"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.MATCH_VERSION">
+         <title>public static final int MATCH_VERSION = 50</title>
+         <para>
+Device Access match value indicating a match with {@link #USB_IDVENDOR},
+ {@link #USB_IDPRODUCT}, and {@link #USB_BCDDEVICE}.
+   </para>
+      </section>
+      <section xreflabel="USB_ADDRESS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_ADDRESS">
+         <title>public static final String USB_ADDRESS = "usbinfo.address"</title>
+         <para>
+Service property to identify USB address.
+ </para>
+         <para>
+ Used to identify USB devices with same VID / PID. The value is the ID of
+ the USB address assigned when connecting the USB device. USB address is
+ an integer in the range 1-127 and does not change while the USB device
+ remains connected. The value type is Integer.</para>
+      </section>
+      <section xreflabel="USB_BALTERNATESETTING"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BALTERNATESETTING">
+         <title>public static final String USB_BALTERNATESETTING = "usbinfo.bAlternateSetting"</title>
+         <para>
+Service property for USB Interface Descriptor field "bAlternateSetting".
+ </para>
+         <para>
+ The value type is Integer. This service property is optional.</para>
+      </section>
+      <section xreflabel="USB_BCDDEVICE"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BCDDEVICE">
+         <title>public static final String USB_BCDDEVICE = "usbinfo.bcdDevice"</title>
+         <para>
+Service property for USB Device Descriptor field "bcdDevice".
+ </para>
+         <para>
+ The value type is String; the value is in 4-digit BCD format. For
+ example, "0200".</para>
+      </section>
+      <section xreflabel="USB_BCDUSB"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BCDUSB">
+         <title>public static final String USB_BCDUSB = "usbinfo.bcdUSB"</title>
+         <para>
+Service property for USB Device Descriptor field "bcdUSB".
+ </para>
+         <para>
+ The value type is String; the value is in 4-digit BCD format. For
+ example, "0210". This service property is optional.</para>
+      </section>
+      <section xreflabel="USB_BDEVICECLASS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BDEVICECLASS">
+         <title>public static final String USB_BDEVICECLASS = "usbinfo.bDeviceClass"</title>
+         <para>
+Service property for USB Device Descriptor field "bDeviceClass".
+ </para>
+         <para>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</para>
+      </section>
+      <section xreflabel="USB_BDEVICEPROTOCOL"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BDEVICEPROTOCOL">
+         <title>public static final String USB_BDEVICEPROTOCOL = "usbinfo.bDeviceProtocol"</title>
+         <para>
+Service property for USB Device Descriptor field "bDeviceProtocol".
+ </para>
+         <para>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</para>
+      </section>
+      <section xreflabel="USB_BDEVICESUBCLASS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BDEVICESUBCLASS">
+         <title>public static final String USB_BDEVICESUBCLASS = "usbinfo.bDeviceSubClass"</title>
+         <para>
+Service property for USB Device Descriptor field "bDeviceSubClass".
+ </para>
+         <para>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</para>
+      </section>
+      <section xreflabel="USB_BINTERFACECLASS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BINTERFACECLASS">
+         <title>public static final String USB_BINTERFACECLASS = "usbinfo.bInterfaceClass"</title>
+         <para>
+Service property for USB Interface Descriptor field "bInterfaceClass".
+ </para>
+         <para>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</para>
+      </section>
+      <section xreflabel="USB_BINTERFACENUMBER"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BINTERFACENUMBER">
+         <title>public static final String USB_BINTERFACENUMBER = "usbinfo.bInterfaceNumber"</title>
+         <para>
+Service property for USB Interface Descriptor field "bInterfaceNumber".
+ </para>
+         <para>
+ The value type is Integer.</para>
+      </section>
+      <section xreflabel="USB_BINTERFACEPROTOCOL"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BINTERFACEPROTOCOL">
+         <title>public static final String USB_BINTERFACEPROTOCOL = "usbinfo.bInterfaceProtocol"</title>
+         <para>
+Service property for USB Interface Descriptor field "bInterfaceProtocol".
+ </para>
+         <para>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</para>
+      </section>
+      <section xreflabel="USB_BINTERFACESUBCLASS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BINTERFACESUBCLASS">
+         <title>public static final String USB_BINTERFACESUBCLASS = "usbinfo.bInterfaceSubClass"</title>
+         <para>
+Service property for USB Interface Descriptor field "bInterfaceSubClass".
+ </para>
+         <para>
+ The value type is String; the value is in 2-digit hexadecimal. For
+ example, "ff".</para>
+      </section>
+      <section xreflabel="USB_BMAXPACKETSIZE0"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BMAXPACKETSIZE0">
+         <title>public static final String USB_BMAXPACKETSIZE0 = "usbinfo.bMaxPacketSize0"</title>
+         <para>
+Service property for USB Device Descriptor field "bMaxPacketSize0".
+ </para>
+         <para>
+ The value type is Integer. This service property is optional.</para>
+      </section>
+      <section xreflabel="USB_BNUMCONFIGURATIONS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BNUMCONFIGURATIONS">
+         <title>public static final String USB_BNUMCONFIGURATIONS = "usbinfo.bNumConfigurations"</title>
+         <para>
+Service property for USB Device Descriptor field "bNumConfigurations".
+ </para>
+         <para>
+ The value type is Integer. This service property is optional.</para>
+      </section>
+      <section xreflabel="USB_BNUMENDPOINTS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BNUMENDPOINTS">
+         <title>public static final String USB_BNUMENDPOINTS = "usbinfo.bNumEndpoints"</title>
+         <para>
+Service property for USB Interface Descriptor field "bNumEndpoints".
+ </para>
+         <para>
+ The value type is Integer. This service property is optional.</para>
+      </section>
+      <section xreflabel="USB_BUS"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_BUS">
+         <title>public static final String USB_BUS = "usbinfo.bus"</title>
+         <para>
+Service property to identify USB bus.
+ </para>
+         <para>
+ Used to identify USB devices with same VID / PID. The value is the ID of
+ the USB bus assigned when connecting the USB device. The USB bus ID is an
+ integer and does not change while the USB device remains connected. The
+ value type is Integer.</para>
+      </section>
+      <section xreflabel="USB_IDPRODUCT"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_IDPRODUCT">
+         <title>public static final String USB_IDPRODUCT = "usbinfo.idProduct"</title>
+         <para>
+Service property for USB Device Descriptor field "idProduct".
+ </para>
+         <para>
+ The value type is String; the value is in 4-digit hexadecimal. For
+ example, "8372".</para>
+      </section>
+      <section xreflabel="USB_IDVENDOR"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_IDVENDOR">
+         <title>public static final String USB_IDVENDOR = "usbinfo.idVendor"</title>
+         <para>
+Service property for USB Device Descriptor field "idVendor".
+ </para>
+         <para>
+ The value type is String; the value is in 4-digit hexadecimal. For
+ example, "0403".</para>
+      </section>
+      <section xreflabel="USB_INTERFACE"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_INTERFACE">
+         <title>public static final String USB_INTERFACE = "usbinfo.Interface"</title>
+         <para>
+Service property for name referenced by USB Interface Descriptor field
+ "iInterface".
+ </para>
+         <para>
+ The value type is String. This service property is optional.</para>
+      </section>
+      <section xreflabel="USB_MANUFACTURER"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_MANUFACTURER">
+         <title>public static final String USB_MANUFACTURER = "usbinfo.Manufacturer"</title>
+         <para>
+Service property for name referenced by USB Device Descriptor field
+ "iManufacturer".
+ </para>
+         <para>
+ The value type is String. For example, "Buffalo Inc.". This service
+ property is optional.</para>
+      </section>
+      <section xreflabel="USB_PRODUCT"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_PRODUCT">
+         <title>public static final String USB_PRODUCT = "usbinfo.Product"</title>
+         <para>
+Service property for name referenced by USB Device Descriptor field
+ "iProduct".
+ </para>
+         <para>
+ The value type is String. For example, "USB2.0 PC Camera". This service
+ property is optional.</para>
+      </section>
+      <section xreflabel="USB_SERIALNUMBER"
+               role="field"
+               xml:id="org.osgi.service.usbinfo.USBInfoDevice.USB_SERIALNUMBER">
+         <title>public static final String USB_SERIALNUMBER = "usbinfo.SerialNumber"</title>
+         <para>
+Service property for name referenced by USB Device Descriptor field
+ "iSerialNumber".
+ </para>
+         <para>
+ The value type is String. For example, "57B0002600000001". This service
+ property is optional.</para>
+      </section>
+   </section>
+</section>

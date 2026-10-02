@@ -1,0 +1,5 @@
+org/osgi/impl/service/usbinfo/USBInfoDeviceImpl.class
+org/osgi/impl/service/usbinfo/TestStepImpl.class
+org/osgi/impl/service/usbinfo/Commands.class
+org/osgi/impl/service/usbinfo/Activator.class
+org/osgi/impl/service/usbinfo/USBTracker.class
