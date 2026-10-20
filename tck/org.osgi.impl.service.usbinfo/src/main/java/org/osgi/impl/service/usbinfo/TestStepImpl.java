@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.osgi.service.usbinfo.USBInfoDevice;
-import org.osgi.test.support.step.TestStep;
+import org.osgi.tck.step.TestStep;
 
 public class TestStepImpl implements TestStep {
 	private static final String	SEPARATOR_COMMA	= ",";

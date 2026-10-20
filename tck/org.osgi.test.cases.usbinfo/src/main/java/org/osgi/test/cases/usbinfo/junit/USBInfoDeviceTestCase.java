@@ -18,43 +18,56 @@
 
 package org.osgi.test.cases.usbinfo.junit;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.usbinfo.USBInfoDevice;
 import org.osgi.test.cases.usbinfo.util.TestServiceListener;
 import org.osgi.test.cases.usbinfo.util.USBTestProxy;
-import org.osgi.test.support.compatibility.DefaultTestBundleControl;
-import org.osgi.test.support.step.TestStepProxy;
+import org.osgi.test.common.annotation.InjectBundleContext;
+import org.osgi.tck.step.TestStepProxy;
 
-public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
+public class USBInfoDeviceTestCase {
+
+	@InjectBundleContext
+	BundleContext		context;
     private USBTestProxy	testProxy;
 
-    protected void setUp() throws Exception {
-        this.testProxy = new USBTestProxy(new TestStepProxy(getContext()));
+    @BeforeEach
+    public void setUp() throws Exception {
+        this.testProxy = new USBTestProxy(new TestStepProxy(context));
     }
 
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         this.testProxy.close();
     }
 
     /**
      * Tests register a USBInfoDevice service.
      */
+    @Test
     public void testRegisterDevice01() {
         String[] ids = null;
         try {
 			TestServiceListener<USBInfoDevice> listener = new TestServiceListener<>(
 					ServiceEvent.REGISTERED);
-            getContext().addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
+            context.addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
 
             String command = "registerDevice";
             String message = "[TEST-RD01] Connect a device.";
             ids = testProxy.executeTestStep(command, message, new String[]{});
 
-            getContext().removeServiceListener(listener);
+            context.removeServiceListener(listener);
 
-            assertEquals("Only one USBInfoDevice service event is expected.", 1, listener.size());
+            assertThat(listener.size()).as("Only one USBInfoDevice service event is expected.").isOne();
 			ServiceReference<USBInfoDevice> ref = listener.get(0);
             String[] category = (String[]) ref.getProperty(org.osgi.service.device.Constants.DEVICE_CATEGORY);
             boolean categoryFlag = false;
@@ -64,12 +77,12 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
                     break;
                 }
             }
-            assertTrue("The following service property is not correct: " + org.osgi.service.device.Constants.DEVICE_CATEGORY, categoryFlag);
+            assertThat(categoryFlag).as("The following service property is not correct: " + org.osgi.service.device.Constants.DEVICE_CATEGORY).isTrue();
 
             // usbinfo.bDeviceClass: String, Hexadecimal, 2-digits.
             Object value = ref.getProperty(USBInfoDevice.USB_BDEVICECLASS);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BDEVICECLASS, value instanceof String);
-            assertEquals("The following service property is not correct: " + USBInfoDevice.USB_BDEVICECLASS, 2, ((String) value).length());
+            assertThat(value instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICECLASS).isTrue();
+            assertThat(((String) value)).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICECLASS).hasSize(2);
             try {
                 Integer.parseInt(((String) value), 16);
             } catch (NumberFormatException e) {
@@ -78,8 +91,8 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
             // usbinfo.bDeviceSubClass: String, Hexadecimal, 2-digits.
             value = ref.getProperty(USBInfoDevice.USB_BDEVICESUBCLASS);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BDEVICESUBCLASS, value instanceof String);
-            assertEquals("The following service property is not correct: " + USBInfoDevice.USB_BDEVICESUBCLASS, 2, ((String) value).length());
+            assertThat(value instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICESUBCLASS).isTrue();
+            assertThat(((String) value)).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICESUBCLASS).hasSize(2);
             try {
                 Integer.parseInt(((String) value), 16);
             } catch (NumberFormatException e) {
@@ -88,8 +101,8 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
             // usbinfo.bDeviceProtocol: String, Hexadecimal, 2-digits.
             value = ref.getProperty(USBInfoDevice.USB_BDEVICEPROTOCOL);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BDEVICEPROTOCOL, value instanceof String);
-            assertEquals("The following service property is not correct: " + USBInfoDevice.USB_BDEVICEPROTOCOL, 2, ((String) value).length());
+            assertThat(value instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICEPROTOCOL).isTrue();
+            assertThat(((String) value)).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICEPROTOCOL).hasSize(2);
             try {
                 Integer.parseInt(((String) value), 16);
             } catch (NumberFormatException e) {
@@ -98,8 +111,8 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
             // usbinfo.idVendor: String, Hexadecimal, 4-digits.
             value = ref.getProperty(USBInfoDevice.USB_IDVENDOR);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_IDVENDOR, value instanceof String);
-            assertEquals("The following service property is not correct: " + USBInfoDevice.USB_IDVENDOR, 4, ((String) value).length());
+            assertThat(value instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_IDVENDOR).isTrue();
+            assertThat(((String) value)).as("The following service property is not correct: " + USBInfoDevice.USB_IDVENDOR).hasSize(4);
             try {
                 Integer.parseInt(((String) value), 16);
             } catch (NumberFormatException e) {
@@ -108,8 +121,8 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
             // usbinfo.idProduct: String, Hexadecimal, 4-digits.
             value = ref.getProperty(USBInfoDevice.USB_IDPRODUCT);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_IDPRODUCT, value instanceof String);
-            assertEquals("The following service property is not correct: " + USBInfoDevice.USB_IDPRODUCT, 4, ((String) value).length());
+            assertThat(value instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_IDPRODUCT).isTrue();
+            assertThat(((String) value)).as("The following service property is not correct: " + USBInfoDevice.USB_IDPRODUCT).hasSize(4);
             try {
                 Integer.parseInt(((String) value), 16);
             } catch (NumberFormatException e) {
@@ -118,8 +131,8 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
             // usbinfo.bcdDevice: String, BCD format, 4-digits.
             value = ref.getProperty(USBInfoDevice.USB_BCDDEVICE);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BCDDEVICE, value instanceof String);
-            assertEquals("The following service property is not correct: " + USBInfoDevice.USB_BCDDEVICE, 4, ((String) value).length());
+            assertThat(value instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BCDDEVICE).isTrue();
+            assertThat(((String) value)).as("The following service property is not correct: " + USBInfoDevice.USB_BCDDEVICE).hasSize(4);
             try {
                 Integer.parseInt(((String) value), 10);
             } catch (NumberFormatException e) {
@@ -128,12 +141,12 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
             // usbinfo.bInterfaceNumber: Integer.
             value = ref.getProperty(USBInfoDevice.USB_BINTERFACENUMBER);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACENUMBER, value instanceof Integer);
+            assertThat(value instanceof Integer).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACENUMBER).isTrue();
 
             // usbinfo.bInterfaceClass: String, Hexadecimal, 2-digits.
             value = ref.getProperty(USBInfoDevice.USB_BINTERFACECLASS);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACECLASS, value instanceof String);
-            assertEquals("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACECLASS, 2, ((String) value).length());
+            assertThat(value instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACECLASS).isTrue();
+            assertThat(((String) value)).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACECLASS).hasSize(2);
             try {
                 Integer.parseInt(((String) value), 16);
             } catch (NumberFormatException e) {
@@ -142,8 +155,8 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
             // usbinfo.bInterfaceSubClass: String, Hexadecimal, 2-digits.
             value = ref.getProperty(USBInfoDevice.USB_BINTERFACESUBCLASS);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACESUBCLASS, value instanceof String);
-            assertEquals("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACESUBCLASS, 2, ((String) value).length());
+            assertThat(value instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACESUBCLASS).isTrue();
+            assertThat(((String) value)).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACESUBCLASS).hasSize(2);
             try {
                 Integer.parseInt(((String) value), 16);
             } catch (NumberFormatException e) {
@@ -152,8 +165,8 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
             // usbinfo.bInterfaceProtocol: String, Hexadecimal, 2-digits.
             value = ref.getProperty(USBInfoDevice.USB_BINTERFACEPROTOCOL);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACEPROTOCOL, value instanceof String);
-            assertEquals("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACEPROTOCOL, 2, ((String) value).length());
+            assertThat(value instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACEPROTOCOL).isTrue();
+            assertThat(((String) value)).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACEPROTOCOL).hasSize(2);
             try {
                 Integer.parseInt(((String) value), 16);
             } catch (NumberFormatException e) {
@@ -162,13 +175,13 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
             // usbinfo.bus: Integer.
             value = ref.getProperty(USBInfoDevice.USB_BUS);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BUS, value instanceof Integer);
+            assertThat(value instanceof Integer).as("The following service property is not correct: " + USBInfoDevice.USB_BUS).isTrue();
 
             // usbinfo.address: Integer(001-127).
             value = ref.getProperty(USBInfoDevice.USB_ADDRESS);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS, value instanceof Integer);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS, ((Integer) value).intValue() >= 1);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS, ((Integer) value).intValue() <= 127);
+            assertThat(value instanceof Integer).as("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS).isTrue();
+            assertThat(((Integer) value).intValue() >= 1).as("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS).isTrue();
+            assertThat(((Integer) value).intValue() <= 127).as("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS).isTrue();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,13 +196,14 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
     /**
      * Tests register two USBInfoDevice services.
      */
+    @Test
     public void testRegisterDevice02() {
         String[] ids = null;
         String[] ids2 = null;
         try {
 			TestServiceListener<USBInfoDevice> listener = new TestServiceListener<>(
 					ServiceEvent.REGISTERED);
-            getContext().addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
+            context.addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
 
             String command = "registerDevice";
             String message = "[TEST-RD02] Connect the first device.";
@@ -198,9 +212,9 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
             String message2 = "Connect the second device.";
             ids2 = testProxy.executeTestStep(command, message2, new String[]{});
 
-            getContext().removeServiceListener(listener);
+            context.removeServiceListener(listener);
 
-            assertEquals("Two USBInfoDevice service events are expected.", 2, listener.size());
+            assertThat(listener.size()).as("Two USBInfoDevice service events are expected.").isEqualTo(2);
 			ServiceReference<USBInfoDevice> ref = listener.get(0);
             String[] category = (String[]) ref.getProperty(org.osgi.service.device.Constants.DEVICE_CATEGORY);
             boolean categoryFlag = false;
@@ -210,19 +224,19 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
                     break;
                 }
             }
-            assertTrue("The following service property is not correct: " + org.osgi.service.device.Constants.DEVICE_CATEGORY, categoryFlag);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BDEVICECLASS, ref.getProperty(USBInfoDevice.USB_BDEVICECLASS) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BDEVICESUBCLASS, ref.getProperty(USBInfoDevice.USB_BDEVICESUBCLASS) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BDEVICEPROTOCOL, ref.getProperty(USBInfoDevice.USB_BDEVICEPROTOCOL) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_IDVENDOR, ref.getProperty(USBInfoDevice.USB_IDVENDOR) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_IDPRODUCT, ref.getProperty(USBInfoDevice.USB_IDPRODUCT) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BCDDEVICE, ref.getProperty(USBInfoDevice.USB_BCDDEVICE) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACENUMBER, ref.getProperty(USBInfoDevice.USB_BINTERFACENUMBER) instanceof Integer);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACECLASS, ref.getProperty(USBInfoDevice.USB_BINTERFACECLASS) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACESUBCLASS, ref.getProperty(USBInfoDevice.USB_BINTERFACESUBCLASS) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACEPROTOCOL, ref.getProperty(USBInfoDevice.USB_BINTERFACEPROTOCOL) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BUS, ref.getProperty(USBInfoDevice.USB_BUS) instanceof Integer);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS, ref.getProperty(USBInfoDevice.USB_ADDRESS) instanceof Integer);
+            assertThat(categoryFlag).as("The following service property is not correct: " + org.osgi.service.device.Constants.DEVICE_CATEGORY).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BDEVICECLASS) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICECLASS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BDEVICESUBCLASS) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICESUBCLASS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BDEVICEPROTOCOL) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICEPROTOCOL).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_IDVENDOR) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_IDVENDOR).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_IDPRODUCT) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_IDPRODUCT).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BCDDEVICE) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BCDDEVICE).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BINTERFACENUMBER) instanceof Integer).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACENUMBER).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BINTERFACECLASS) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACECLASS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BINTERFACESUBCLASS) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACESUBCLASS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BINTERFACEPROTOCOL) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACEPROTOCOL).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BUS) instanceof Integer).as("The following service property is not correct: " + USBInfoDevice.USB_BUS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_ADDRESS) instanceof Integer).as("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS).isTrue();
 
 
             ref = listener.get(1);
@@ -234,19 +248,19 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
                     break;
                 }
             }
-            assertTrue("The following service property is not correct: " + org.osgi.service.device.Constants.DEVICE_CATEGORY, categoryFlag);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BDEVICECLASS, ref.getProperty(USBInfoDevice.USB_BDEVICECLASS) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BDEVICESUBCLASS, ref.getProperty(USBInfoDevice.USB_BDEVICESUBCLASS) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BDEVICEPROTOCOL, ref.getProperty(USBInfoDevice.USB_BDEVICEPROTOCOL) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_IDVENDOR, ref.getProperty(USBInfoDevice.USB_IDVENDOR) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_IDPRODUCT, ref.getProperty(USBInfoDevice.USB_IDPRODUCT) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BCDDEVICE, ref.getProperty(USBInfoDevice.USB_BCDDEVICE) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACENUMBER, ref.getProperty(USBInfoDevice.USB_BINTERFACENUMBER) instanceof Integer);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACECLASS, ref.getProperty(USBInfoDevice.USB_BINTERFACECLASS) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACESUBCLASS, ref.getProperty(USBInfoDevice.USB_BINTERFACESUBCLASS) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACEPROTOCOL, ref.getProperty(USBInfoDevice.USB_BINTERFACEPROTOCOL) instanceof String);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_BUS, ref.getProperty(USBInfoDevice.USB_BUS) instanceof Integer);
-            assertTrue("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS, ref.getProperty(USBInfoDevice.USB_ADDRESS) instanceof Integer);
+            assertThat(categoryFlag).as("The following service property is not correct: " + org.osgi.service.device.Constants.DEVICE_CATEGORY).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BDEVICECLASS) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICECLASS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BDEVICESUBCLASS) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICESUBCLASS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BDEVICEPROTOCOL) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BDEVICEPROTOCOL).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_IDVENDOR) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_IDVENDOR).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_IDPRODUCT) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_IDPRODUCT).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BCDDEVICE) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BCDDEVICE).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BINTERFACENUMBER) instanceof Integer).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACENUMBER).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BINTERFACECLASS) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACECLASS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BINTERFACESUBCLASS) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACESUBCLASS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BINTERFACEPROTOCOL) instanceof String).as("The following service property is not correct: " + USBInfoDevice.USB_BINTERFACEPROTOCOL).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_BUS) instanceof Integer).as("The following service property is not correct: " + USBInfoDevice.USB_BUS).isTrue();
+            assertThat(ref.getProperty(USBInfoDevice.USB_ADDRESS) instanceof Integer).as("The following service property is not correct: " + USBInfoDevice.USB_ADDRESS).isTrue();
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage(), e);
@@ -263,6 +277,7 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
     /**
      * Tests unregister a USBInfoDevice service.
      */
+    @Test
     public void testUnregisterDevice01() {
         String[] ids = null;
         try {
@@ -272,18 +287,18 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
 			TestServiceListener<USBInfoDevice> listener = new TestServiceListener<>(
 					ServiceEvent.UNREGISTERING);
-            getContext().addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
+            context.addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
 
             command = "unregisterDevice";
             message = "Disonnect the device.";
             testProxy.executeTestStep(command, message, new String[] {ids[0]});
 
-            getContext().removeServiceListener(listener);
+            context.removeServiceListener(listener);
 
-            assertEquals("Only one USBInfoDevice service event is expected.", 1, listener.size());
+            assertThat(listener.size()).as("Only one USBInfoDevice service event is expected.").isOne();
             Long registerId = Long.valueOf(ids[0]);
             Long unregisterId = (Long) listener.get(0).getProperty(Constants.SERVICE_ID);
-            assertEquals("The unregisterd service is not correct.", registerId, unregisterId);
+            assertThat(unregisterId).as("The unregisterd service is not correct.").isEqualTo(registerId);
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage(), e);
@@ -294,6 +309,7 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
      * Tests unregister a USBInfoDevice service. 1. register A 2. register B 3.
      * unregister A
      */
+    @Test
     public void testUnregisterDevice02() {
         String[] ids = null;
         String[] ids2 = null;
@@ -307,18 +323,18 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
 			TestServiceListener<USBInfoDevice> listener = new TestServiceListener<>(
 					ServiceEvent.UNREGISTERING);
-            getContext().addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
+            context.addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
 
             command = "unregisterDevice";
             message = "Disconnect the first device.";
             testProxy.executeTestStep(command, message, new String[] {ids[0]});
 
-            getContext().removeServiceListener(listener);
+            context.removeServiceListener(listener);
 
-            assertEquals("Only one USBInfoDevice service event is expected.", 1, listener.size());
+            assertThat(listener.size()).as("Only one USBInfoDevice service event is expected.").isOne();
             Long registerId = Long.valueOf(ids[0]);
             Long unregisterId = (Long) listener.get(0).getProperty(Constants.SERVICE_ID);
-            assertEquals("The unregisterd service is not correct.", registerId, unregisterId);
+            assertThat(unregisterId).as("The unregisterd service is not correct.").isEqualTo(registerId);
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage(), e);
@@ -333,6 +349,7 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
      * Tests unregister a USBInfoDevice service. 1. register A 2. register B 3.
      * unregister A 4. unregister B
      */
+    @Test
     public void testUnregisterDevice03() {
         String[] ids = null;
         String[] ids2 = null;
@@ -346,7 +363,7 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
 
 			TestServiceListener<USBInfoDevice> listener = new TestServiceListener<>(
 					ServiceEvent.UNREGISTERING);
-            getContext().addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
+            context.addServiceListener(listener, "(objectClass=org.osgi.service.usbinfo.USBInfoDevice)");
 
             command = "unregisterDevice";
             message = "Disconnect the first device.";
@@ -355,15 +372,15 @@ public class USBInfoDeviceTestCase extends DefaultTestBundleControl {
             message = "Disconnect the second device.";
             testProxy.executeTestStep(command, message, new String[] {ids2[0]});
 
-            getContext().removeServiceListener(listener);
+            context.removeServiceListener(listener);
 
-            assertEquals("Only two USBInfoDevice service events are expected.", 2, listener.size());
+            assertThat(listener.size()).as("Only two USBInfoDevice service events are expected.").isEqualTo(2);
             Long registerId = Long.valueOf(ids[0]);
             Long unregisterId = (Long) listener.get(0).getProperty(Constants.SERVICE_ID);
-            assertEquals("The unregister service is not correct.", registerId, unregisterId);
+            assertThat(unregisterId).as("The unregister service is not correct.").isEqualTo(registerId);
             registerId = Long.valueOf(ids2[0]);
             unregisterId = (Long) listener.get(1).getProperty(Constants.SERVICE_ID);
-            assertEquals("The unregister service is not correct.", registerId, unregisterId);
+            assertThat(unregisterId).as("The unregister service is not correct.").isEqualTo(registerId);
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage(), e);
