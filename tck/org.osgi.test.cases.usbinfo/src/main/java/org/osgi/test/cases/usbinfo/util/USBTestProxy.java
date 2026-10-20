@@ -20,7 +20,7 @@
 package org.osgi.test.cases.usbinfo.util;
 
 import java.util.StringTokenizer;
-import org.osgi.test.support.step.TestStepProxy;
+import org.osgi.tck.step.TestStepProxy;
 
 public class USBTestProxy {
 	private static final String	SEPARATOR_COMMA	= ",";
